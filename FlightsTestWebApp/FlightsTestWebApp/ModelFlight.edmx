@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="flightdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Airports">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="GPSX" Type="int" />
+          <Property Name="GPDY" Type="int" />
+          <Property Name="State" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Flights">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FlightNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="Departure_aeroport" Type="int" />
+          <Property Name="Destination_aeroport" Type="int" />
+          <Property Name="Departure_Time" Type="time" Precision="7" />
+          <Property Name="Arriving_Time" Type="time" Precision="7" />
+        </EntityType>
+        <Association Name="FK_Flights_Airports">
+          <End Role="Airports" Type="Self.Airports" Multiplicity="0..1" />
+          <End Role="Flights" Type="Self.Flights" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airports">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Flights">
+              <PropertyRef Name="Departure_aeroport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Flights_Airports1">
+          <End Role="Airports" Type="Self.Airports" Multiplicity="0..1" />
+          <End Role="Flights" Type="Self.Flights" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airports">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Flights">
+              <PropertyRef Name="Destination_aeroport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="flightdbModelStoreContainer">
+          <EntitySet Name="Airports" EntityType="Self.Airports" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Flights" EntityType="Self.Flights" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Flights_Airports" Association="Self.FK_Flights_Airports">
+            <End Role="Airports" EntitySet="Airports" />
+            <End Role="Flights" EntitySet="Flights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Flights_Airports1" Association="Self.FK_Flights_Airports1">
+            <End Role="Airports" EntitySet="Airports" />
+            <End Role="Flights" EntitySet="Flights" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="flightdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Airport">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GPSX" Type="Int32" />
+          <Property Name="GPDY" Type="Int32" />
+          <Property Name="State" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Flights" Relationship="Self.FK_Flights_Airports" FromRole="Airports" ToRole="Flights" />
+          <NavigationProperty Name="Flights1" Relationship="Self.FK_Flights_Airports1" FromRole="Airports" ToRole="Flights" />
+        </EntityType>
+        <EntityType Name="Flight">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FlightNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Departure_aeroport" Type="Int32" />
+          <Property Name="Destination_aeroport" Type="Int32" />
+          <Property Name="Departure_Time" Type="Time" Precision="7" />
+          <Property Name="Arriving_Time" Type="Time" Precision="7" />
+          <NavigationProperty Name="Airport" Relationship="Self.FK_Flights_Airports" FromRole="Flights" ToRole="Airports" />
+          <NavigationProperty Name="Airport1" Relationship="Self.FK_Flights_Airports1" FromRole="Flights" ToRole="Airports" />
+        </EntityType>
+        <Association Name="FK_Flights_Airports">
+          <End Role="Airports" Type="Self.Airport" Multiplicity="0..1" />
+          <End Role="Flights" Type="Self.Flight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airports">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Flights">
+              <PropertyRef Name="Departure_aeroport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Flights_Airports1">
+          <End Role="Airports" Type="Self.Airport" Multiplicity="0..1" />
+          <End Role="Flights" Type="Self.Flight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airports">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Flights">
+              <PropertyRef Name="Destination_aeroport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="flightdbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Airports" EntityType="Self.Airport" />
+          <EntitySet Name="Flights" EntityType="Self.Flight" />
+          <AssociationSet Name="FK_Flights_Airports" Association="Self.FK_Flights_Airports">
+            <End Role="Airports" EntitySet="Airports" />
+            <End Role="Flights" EntitySet="Flights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Flights_Airports1" Association="Self.FK_Flights_Airports1">
+            <End Role="Airports" EntitySet="Airports" />
+            <End Role="Flights" EntitySet="Flights" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="flightdbModelStoreContainer" CdmEntityContainer="flightdbEntities">
+          <EntitySetMapping Name="Airports">
+            <EntityTypeMapping TypeName="flightdbModel.Airport">
+              <MappingFragment StoreEntitySet="Airports">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="GPSX" ColumnName="GPSX" />
+                <ScalarProperty Name="GPDY" ColumnName="GPDY" />
+                <ScalarProperty Name="State" ColumnName="State" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Flights">
+            <EntityTypeMapping TypeName="flightdbModel.Flight">
+              <MappingFragment StoreEntitySet="Flights">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FlightNumber" ColumnName="FlightNumber" />
+                <ScalarProperty Name="Departure_aeroport" ColumnName="Departure_aeroport" />
+                <ScalarProperty Name="Destination_aeroport" ColumnName="Destination_aeroport" />
+                <ScalarProperty Name="Departure_Time" ColumnName="Departure_Time" />
+                <ScalarProperty Name="Arriving_Time" ColumnName="Arriving_Time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

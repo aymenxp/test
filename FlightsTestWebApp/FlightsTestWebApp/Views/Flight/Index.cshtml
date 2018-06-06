@@ -1,0 +1,45 @@
+﻿@model IEnumerable<FlightsTestWebApp.Models.FlightDAO>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Flights</title>
+</head>
+<body>
+    <div> 
+       <table>
+           <tr>
+               <td>Id</td>
+               <td>FlightNumber</td>
+               <td>Departure_aeroport</td>
+               <td>Destination_aeroport</td>
+               <td>Departure_Time</td>
+               <td>Arriving_Time</td>
+           </tr>
+           @foreach (var flight in Model)
+            {
+               <tr>
+                   <td>@flight.Id</td>
+                   <td>@flight.FlightNumber</td>
+                   <td>@flight.Departure_aeroport</td>
+                   <td>@flight.Destination_aeroport</td>
+                   <td>@flight.Departure_Time</td>
+                   <td>@flight.Arriving_Time</td>
+               </tr>
+               
+           }
+       </table>
+
+        <div>
+            <a href="addflight">Add new flight</a>
+        </div>
+      
+    </div>
+</body>
+</html>

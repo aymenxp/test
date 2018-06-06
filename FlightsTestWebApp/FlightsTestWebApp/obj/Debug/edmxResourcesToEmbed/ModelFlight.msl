@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="flightdbModelStoreContainer" CdmEntityContainer="flightdbEntities">
+    <EntitySetMapping Name="Airports">
+      <EntityTypeMapping TypeName="flightdbModel.Airport">
+        <MappingFragment StoreEntitySet="Airports">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="GPSX" ColumnName="GPSX" />
+          <ScalarProperty Name="GPDY" ColumnName="GPDY" />
+          <ScalarProperty Name="State" ColumnName="State" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Flights">
+      <EntityTypeMapping TypeName="flightdbModel.Flight">
+        <MappingFragment StoreEntitySet="Flights">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FlightNumber" ColumnName="FlightNumber" />
+          <ScalarProperty Name="Departure_aeroport" ColumnName="Departure_aeroport" />
+          <ScalarProperty Name="Destination_aeroport" ColumnName="Destination_aeroport" />
+          <ScalarProperty Name="Departure_Time" ColumnName="Departure_Time" />
+          <ScalarProperty Name="Arriving_Time" ColumnName="Arriving_Time" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

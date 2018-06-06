@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="flightdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Airports">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="GPSX" Type="int" />
+    <Property Name="GPDY" Type="int" />
+    <Property Name="State" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="Flights">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FlightNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="Departure_aeroport" Type="int" />
+    <Property Name="Destination_aeroport" Type="int" />
+    <Property Name="Departure_Time" Type="time" Precision="7" />
+    <Property Name="Arriving_Time" Type="time" Precision="7" />
+  </EntityType>
+  <Association Name="FK_Flights_Airports">
+    <End Role="Airports" Type="Self.Airports" Multiplicity="0..1" />
+    <End Role="Flights" Type="Self.Flights" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Airports">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Flights">
+        <PropertyRef Name="Departure_aeroport" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Flights_Airports1">
+    <End Role="Airports" Type="Self.Airports" Multiplicity="0..1" />
+    <End Role="Flights" Type="Self.Flights" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Airports">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Flights">
+        <PropertyRef Name="Destination_aeroport" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="flightdbModelStoreContainer">
+    <EntitySet Name="Airports" EntityType="Self.Airports" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Flights" EntityType="Self.Flights" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Flights_Airports" Association="Self.FK_Flights_Airports">
+      <End Role="Airports" EntitySet="Airports" />
+      <End Role="Flights" EntitySet="Flights" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Flights_Airports1" Association="Self.FK_Flights_Airports1">
+      <End Role="Airports" EntitySet="Airports" />
+      <End Role="Flights" EntitySet="Flights" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
